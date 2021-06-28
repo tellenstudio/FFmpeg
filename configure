@@ -327,6 +327,7 @@ External library support:
   --disable-vaapi          disable Video Acceleration API (mainly Unix/Intel) code [autodetect]
   --disable-vdpau          disable Nvidia Video Decode and Presentation API for Unix code [autodetect]
   --disable-videotoolbox   disable VideoToolbox code [autodetect]
+  --enable-libcronet       enable libcronet [no]
 
 Toolchain options:
   --arch=ARCH              select architecture [$arch]
@@ -1626,6 +1627,7 @@ EXTERNAL_AUTODETECT_LIBRARY_LIST="
     sndio
     xlib
     zlib
+    libcronet
 "
 
 EXTERNAL_LIBRARY_GPL_LIST="
@@ -3281,6 +3283,7 @@ udp_protocol_select="network"
 udplite_protocol_select="network"
 unix_protocol_deps="sys_un_h"
 unix_protocol_select="network"
+libcronet_protocol_deps="libcronet"
 
 # filters
 afftfilt_filter_deps="avcodec"

@@ -2057,6 +2057,33 @@ int avformat_network_init(void);
  */
 int avformat_network_deinit(void);
 
+/// cronet
+#if CONFIG_LIBCRONET
+/**
+ * Initialize cronet environment, must be called as early as possible.
+ * @return Error code.
+ */
+int av_format_cronet_init(void);
+
+/**
+ * Uninitialize cronet environment.
+ */
+void av_format_cronet_uninit(void);
+
+#ifdef _WIN32
+/**
+ * Cronet initialize COM on current thread under Windows platform.
+ */
+void av_format_cronet_init_com(void);
+
+/**
+ * Cronet uninitialize COM on current thread under Windows platform,
+ * MUST be called from the same thread as av_format_cronet_init_com.
+ */
+void av_format_cronet_uninit_com(void);
+#endif  // #ifdef _WIN32
+#endif  // #if CONFIG_LIBCRONET
+
 #if FF_API_NEXT
 /**
  * If f is NULL, returns the first registered input format,

@@ -5009,6 +5009,11 @@ int avformat_network_init(void)
         return ret;
     if ((ret = ff_tls_init()) < 0)
         return ret;
+
+#if CONFIG_LIBCRONET
+    if ((ret = av_format_cronet_init()) < 0)
+        return ret;
+#endif
 #endif
     return 0;
 }

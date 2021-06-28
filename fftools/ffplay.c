@@ -1280,6 +1280,11 @@ static void do_exit(VideoState *is)
     if (is) {
         stream_close(is);
     }
+
+#if CONFIG_LIBCRONET
+    av_format_cronet_uninit();
+#endif
+
     if (renderer)
         SDL_DestroyRenderer(renderer);
     if (window)
@@ -2735,6 +2740,10 @@ static int read_thread(void *arg)
     int scan_all_pmts_set = 0;
     int64_t pkt_ts;
 
+#if CONFIG_LIBCRONET && defined(_WIN32)
+    av_format_cronet_init_com();
+#endif
+
     if (!wait_mutex) {
         av_log(NULL, AV_LOG_FATAL, "SDL_CreateMutex(): %s\n", SDL_GetError());
         ret = AVERROR(ENOMEM);
@@ -3040,6 +3049,11 @@ static int read_thread(void *arg)
         SDL_PushEvent(&event);
     }
     SDL_DestroyMutex(wait_mutex);
+
+#if CONFIG_LIBCRONET && defined(_WIN32)
+    av_format_cronet_uninit_com();
+#endif
+
     return 0;
 }
 
@@ -3650,6 +3664,10 @@ int main(int argc, char **argv)
 
     av_log_set_flags(AV_LOG_SKIP_REPEATED);
     parse_loglevel(argc, argv, options);
+
+#if CONFIG_LIBCRONET
+    av_format_cronet_init();
+#endif
 
     /* register all codecs, demux and protocols */
 #if CONFIG_AVDEVICE

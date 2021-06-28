@@ -659,6 +659,8 @@ static int open_url(AVFormatContext *s, AVIOContext **pb, const char *url,
         }
     } else if (av_strstart(proto_name, "http", NULL)) {
         is_http = 1;
+    } else if (av_strstart(proto_name, "cronet", NULL)) {
+        // is_http = 1;
     } else if (c->hls_io_protocol_enable) {
         ;
     } else
